@@ -1,17 +1,26 @@
 package com.service.main.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-@Table(name="salary")
+@Table(name = "salary", schema = "employeeDB")
 public class Salary {
 
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
+
+    @Transient
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonProperty(value = "creditedDate")
+    private Date creditedDate;
 
     @Column(name="month")
     private String month;
@@ -36,6 +45,14 @@ public class Salary {
     private Employee employee;
 
     public Salary() {}
+
+    public void setCreditedDate(Date date) {
+        this.creditedDate = date;
+    }
+
+    public Date getCreditedDate() {
+        return creditedDate;
+    }
 
     public void setMonth(String month) {
         this.month=month;

@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="employee")
+@Table(name="employee", schema = "employeeDB")
 public class Employee {
 
     @Id
@@ -27,10 +27,10 @@ public class Employee {
     private String gender;
 
     @Column(name="contact_number", nullable = false)
-    private Integer contactNumber;
+    private Long contactNumber;
 
     @Column(name="emergency_contact")
-    private Integer emergencyContact;
+    private Long emergencyContact;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="current_address_id")
@@ -73,11 +73,11 @@ public class Employee {
         return gender;
     }
 
-    public Integer getContactNumber() {
+    public Long getContactNumber() {
         return contactNumber;
     }
 
-    public Integer getEmergencyContact() {
+    public Long getEmergencyContact() {
         return emergencyContact;
     }
 
@@ -105,11 +105,11 @@ public class Employee {
         this.gender = gender;
     }
 
-    public void setContactNumber(Integer contactNumber) {
+    public void setContactNumber(Long contactNumber) {
         this.contactNumber = contactNumber;
     }
 
-    public void setEmergencyContact(Integer emergencyContact) {
+    public void setEmergencyContact(Long emergencyContact) {
         this.emergencyContact = emergencyContact;
     }
 

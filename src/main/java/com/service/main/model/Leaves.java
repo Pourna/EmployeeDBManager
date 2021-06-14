@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="Leaves")
+@Table(name = "leaves", schema = "employeeDB")
 public class Leaves {
 
     @Id
@@ -15,7 +15,7 @@ public class Leaves {
     private String id;
 
     @Column(name = "no_of_days")
-    private Integer noOfDays;
+    private Double noOfDays;
 
     @Column(name = "from_date")
     private Date fromDate;
@@ -32,7 +32,7 @@ public class Leaves {
 
     public Leaves() {}
 
-    public void setNoOfDays(Integer noOfDays) {
+    public void setNoOfDays(Double noOfDays) {
         this.noOfDays = noOfDays;
     }
 
@@ -52,7 +52,7 @@ public class Leaves {
         this.employee = employee;
     }
 
-    public Integer getNoOfDays() {
+    public Double getNoOfDays() {
         return noOfDays;
     }
 
