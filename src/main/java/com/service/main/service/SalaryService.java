@@ -5,11 +5,14 @@ import com.service.main.dao.EmployeeRepository;
 import com.service.main.dao.SalaryRepository;
 import com.service.main.model.Employee;
 import com.service.main.model.Salary;
+import com.service.main.dto.SalaryDTO;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Month;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class SalaryService {
@@ -29,9 +32,13 @@ public class SalaryService {
         salaryRepository.save(salary);
     }
 
-    public List<Salary> getAllSalaryByEmployeeId(String employee_id) {
-        List<Salary> salaries = new ArrayList<>();
-        salaryRepository.findByEmployeeId(employee_id).forEach(salaries::add);
+    public List<SalaryDTO> getAllSalaryByEmployeeId(String employee_id) {
+        List<Salary> salaryList = salaryRepository.findByEmployeeId(employee_id);
+        ModelMapper modelMapper = new ModelMapper();
+        List<SalaryDTO> salaries = salaryList
+                .stream()
+                .map(user -> modelMapper.map(user, SalaryDTO.class))
+                .collect(Collectors.toList());
         return salaries;
     }
 

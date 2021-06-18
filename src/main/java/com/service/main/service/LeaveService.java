@@ -4,11 +4,13 @@ import com.service.main.dao.EmployeeRepository;
 import com.service.main.dao.LeaveRepository;
 import com.service.main.model.Employee;
 import com.service.main.model.Leaves;
+import com.service.main.dto.LeavesDTO;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LeaveService {
@@ -25,9 +27,13 @@ public class LeaveService {
         leaveRepository.save(leaves);
     }
 
-    public List<Leaves> getAllLeaves(String employee_id) {
-        List<Leaves> leaves = new ArrayList<>();
-        leaveRepository.findAllLeavesByEmployeeId(employee_id).forEach(leaves::add);
-        return leaves;
+    public List<LeavesDTO> getAllLeaves(String employee_id) {
+        List<Leaves> leaves = leaveRepository.findAllLeavesByEmployeeId(employee_id);
+        ModelMapper modelMapper = new ModelMapper();
+        List<LeavesDTO> leavesEntities = leaves
+                .stream()
+                .map(user -> modelMapper.map(leaves, LeavesDTO.class))
+                .collect(Collectors.toList());
+        return leavesEntities;
     }
 }

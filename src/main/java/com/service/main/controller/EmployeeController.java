@@ -3,10 +3,9 @@ package com.service.main.controller;
 import com.service.main.model.Employee;
 import com.service.main.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class EmployeeController {
@@ -14,23 +13,25 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
-    @RequestMapping("/employee")
-    public List<Employee> getAllEmployee(){
-        return employeeService.getAllEmployee();
+    @GetMapping("/employee")
+    public ResponseEntity<Object> getAllEmployee(){
+        return new ResponseEntity<>(employeeService.getAllEmployee(), HttpStatus.OK);
     }
 
-    @RequestMapping("/employee/{employee_id}")
-    public Optional<Employee> getEmployeeById(@PathVariable String employee_id) {
-        return employeeService.getEmployeeById(employee_id);
+    @GetMapping("/employee/{employee_id}")
+    public ResponseEntity<Object> getEmployeeById(@PathVariable String employee_id) {
+        return new ResponseEntity<>(employeeService.getEmployeeById(employee_id), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/employee")
-    public void createEmployee(@RequestBody Employee employee) {
+    @PostMapping("/employee")
+    public ResponseEntity<Object> createEmployee(@RequestBody Employee employee) {
         employeeService.addEmployee(employee);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/employee/{employee_id}")
-    public void updateEmployee(@RequestBody Employee employee, @PathVariable String employee_id) {
+    @PutMapping("/employee/{employee_id}")
+    public ResponseEntity<Object> updateEmployee(@RequestBody Employee employee, @PathVariable String employee_id) {
         employeeService.updateEmployee(employee, employee_id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
