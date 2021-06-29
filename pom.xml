@@ -13,7 +13,7 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <postgres.driver.version>9.2-1002.jdbc4</postgres.driver.version>
-        <database.url>jdbc:postgresql://localhost:5432/testdb</database.url>
+        <database.url>jdbc:postgresql://DB_ALIAS/testdb</database.url>
         <database.user>root</database.user>
         <databese.password>abc@123</databese.password>
     </properties>
@@ -23,6 +23,26 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.2.RELEASE</version>
     </parent>
+
+    <build>
+        <plugins>
+        <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+            <mainClass>com.service.main.EmployeeDBManager</mainClass>
+        </configuration>
+
+        <executions>
+            <execution>
+                <goals>
+                    <goal>repackage</goal>
+                </goals>
+            </execution>
+        </executions>
+
+        </plugin></plugins>
+    </build>
 
     <dependencies>
         <dependency>
